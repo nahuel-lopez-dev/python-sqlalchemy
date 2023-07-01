@@ -21,7 +21,17 @@ if __name__ == '__main__':
     metadata.drop_all(engine)
     metadata.create_all(engine)
     
-    # print(users.c) ## Accediendo a las columnas de la tabla con c
-    print(users.c.id)
+    # trabajando con un contexto. Se evita connection.close()
+    with engine.connect() as connection:
+    
+        query_insert = users.insert().values(
+            username = 'user1',
+            email = 'user1@example.com'
+        )
+        # print(query)
+    
+        connection.execute(query_insert)
+    
+    
     
 
