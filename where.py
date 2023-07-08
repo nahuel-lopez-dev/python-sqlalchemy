@@ -15,9 +15,11 @@ users = Table(
     'users',
     metadata,
     Column('id', Integer(), primary_key=True),
-    Column('username', String(), index=True, nullable=False),
-    Column('email', String(),nullable=False),
-    Column('created_at', DateTime(), default=datetime.now),
+    Column('age', Integer()),
+    Column('Country', String(20), nullable=False),
+    Column('email', String(50), nullable=False),
+    Column('gender', String(6), nullable=False),
+    Column('name', String(50), nullable=False),
 )
 
 if __name__ == '__main__':

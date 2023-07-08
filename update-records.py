@@ -6,6 +6,7 @@ from sqlalchemy import MetaData
 from sqlalchemy import Table, Column, Integer, String, DateTime
 
 from sqlalchemy import select
+from sqlalchemy import update
 from sqlalchemy import and_, or_, not_
 
 from sqlalchemy import desc, asc
@@ -18,9 +19,9 @@ users = Table(
     'users',
     metadata,
     Column('id', Integer(), primary_key=True),
-    Column('age', Integer()),
-    Column('Country', String(20), nullable=False),
-    Column('email', String(50), nullable=False),
+    Column('age', Integer),
+    Column('country', String(20),nullable=False),
+    Column('email', String(50),nullable=False),
     Column('gender', String(6), nullable=False),
     Column('name', String(50), nullable=False),
 )
@@ -36,27 +37,17 @@ if __name__ == '__main__':
             # Cargando la tabla con los usuarios
             connection.execute(users.insert(), json.load(file))
         
-        # listar en consola de forma desc. el nombre de los primeros 10 usuarios
-        # cuyo género sea femenino y posean por país Alemania o España.
+        # Actualizando un registro
+        update_query = users.update(users.c.id == 1).values(
+            name = 'Cambio de nombre'
+        )
+        # Actualizando todos los registros
+        # update_query = users.update().values(
+        #     name = 'Cambio de nombre'
+        # )
         
-        # SELECT id, email, name, FROM users WHERE country == 'France
-        select_query = select([
-            users.c.name
-        ]).where(
-            and_(
-                users.c.gender == 'female',
-                or_(
-                    users.c.country == 'Germany',
-                    users.c.country == 'Spain'
-                )
-            )
-        ).order_by(
-            desc(users.c.name)
-        ).limit(10)
+        result = connection.execute(update_query)
+        print(
+            result.rowcount
+        )
         
-        response = connection.execute(select_query) # ResultProxy
-        
-        for user in response.fetchall():
-            print(user.name) # objetos RowProxy
-            
-            
