@@ -38,13 +38,22 @@ if __name__ == '__main__':
             connection.execute(users.insert(), json.load(file))
         
         # Actualizando un registro
-        update_query = users.update(users.c.id == 1).values(
-            name = 'Cambio de nombre'
-        )
+        # update_query = users.update(users.c.id == 1).values(
+        #     name = 'Cambio de nombre'
+        # )
         # Actualizando todos los registros
         # update_query = users.update().values(
         #     name = 'Cambio de nombre'
         # )
+        
+        # Actualizando con update
+        update_query = update(users).values(
+            name='Nuevo cambio de nombre 2.0'
+        ).where(
+            users.c.id == 20
+        )
+        
+        print(update_query)
         
         result = connection.execute(update_query)
         print(
