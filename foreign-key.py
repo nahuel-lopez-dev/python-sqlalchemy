@@ -73,4 +73,21 @@ if __name__ == '__main__':
         )
         connection.execute(insert_query)
         
+        # agregando un inner join
+        select_query = select(
+            [
+                products.c.title,
+                products.c.price,
+                
+            ]
+        ).select_from(
+            orders.join(products)
+        ).where(
+            orders.c.id == 1
+        )
+        # print(select_query)
         
+        result = connection.execute(select_query)
+        
+        for product in result.fetchall():
+            print(product.title, product.price)
