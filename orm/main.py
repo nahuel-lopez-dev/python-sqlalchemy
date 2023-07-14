@@ -1,10 +1,10 @@
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Column, Integer, String, DateTime
 
 engine = create_engine('postgresql://postgres:@localhost/pythonpg')
-
 Base = declarative_base()
 
 class User(Base):
@@ -17,6 +17,15 @@ class User(Base):
     
     def __str__(self):
         return self.username
+    
+Session = sessionmaker(engine)   
+session = Session() 
 
 if __name__ == '__main__':
-    pass
+    
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
+    
+    
+    
+    
