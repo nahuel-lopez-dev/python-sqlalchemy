@@ -26,9 +26,9 @@ if __name__ == '__main__':
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     
-    user1 = User(username='user1', email='user1@example.com')
-    user2 = User(username='user2', email='user2@example.com')
-    user3 = User(username='user3', email='user3@example.com')
+    user1 = User(username='User1', email='user1@example.com')
+    user2 = User(username='User2', email='user2@example.com')
+    user3 = User(username='User3', email='user3@example.com')
     
     # añadiendo los cambios al stack 
     session.add(user1)
@@ -37,5 +37,32 @@ if __name__ == '__main__':
     
     # ejecutando y persistiendo los cambios
     session.commit()
+    
+    # obteniendo registros: SELECT * FROM users;
+    # users = session.query(User).all() # retorna una lista iterable
+    
+    # obteniendo registros en base a una o varias condiciones
+    # SELECT * FROM users WHERE id >= 2 and username = 'User3'
+    # users = session.query(User).filter(
+    #     User.id >= 2
+    # ).filter(
+    #     User.username == 'User3'
+    # )
+    
+    # Importante
+    # Clase --> Instancias de dicha clase
+    # Argumentos --> Tuplas
+    
+    # obteniendo tuplas
+    # users = session.query(User.id, User.username, User.email).filter(
+    #     User.id >= 2
+    # )
+    
+    users = session.query(User).filter(
+        User.id >= 2
+    )
+    
+    for user in users:
+        print(user.created_at)
     
     
