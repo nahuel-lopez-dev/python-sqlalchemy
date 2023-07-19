@@ -42,22 +42,42 @@ if __name__ == '__main__':
     user1 = User(username='user1', email='user1@example.com')
     user2 = User(username='user2', email='user2@example.com')    
     
+    # acceso a relaciones mediante objetos
+    
+    # de una manera
+    course1 = Course(title='Curso profesional de Base de Datos')
+    user1.courses.append(
+        course1
+    )
+    
+    # de otra manera, aplicando directamente
+    user1.courses.append(
+        Course(title='Curso profesional de Python')
+    )
+    
+    user1.courses.append(
+        Course(title='Curso profesional de JavaScript')
+    )
+    
     session.add(user1)
     session.add(user2)
     
     session.commit()
+    
+    print(course1.id)
 
-    course1 = Course(title='Curso profesional de Base de Datos', user_id=user1.id)
-    course2 = Course(title='Curso profesional de Python', user_id=user1.id)
-    course3 = Course(title='Curso profesional de JavaScript', user_id=user1.id)
+    ##### accediendo a las relaciones esto ya no es necesario
+    # course1 = Course(title='Curso profesional de Base de Datos', user_id=user1.id)
+    # course2 = Course(title='Curso profesional de Python', user_id=user1.id)
+    # course3 = Course(title='Curso profesional de JavaScript', user_id=user1.id)
     
-    session.add(course1)
-    session.add(course2)
-    session.add(course3)
+    # session.add(course1)
+    # session.add(course2)
+    # session.add(course3)
     
-    session.commit()
+    # session.commit()
     
-    # for course in user1.courses:
-    #     print(course)
+    # # for course in user1.courses:
+    # #     print(course)
     
-    print(course1.user)
+    # print(course1.user)
